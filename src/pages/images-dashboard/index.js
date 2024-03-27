@@ -7,6 +7,9 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress, useMediaQuery } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { ImageDetails } from "../../routes/constants";
+
+const ENDPOINT = (pageNumber) => `https://pixabay.com/api/?key=43066239-2590ab41bc2eb921f3434dca6&page=${pageNumber}`
 
 export default function ImagesDashboard() {
   const [images, setImages] = useState([]);
@@ -19,12 +22,11 @@ export default function ImagesDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `https://pixabay.com/api/?key=43066239-2590ab41bc2eb921f3434dca6&page=${page}`
-        ).then((resp) => resp.json());
+        const response = await fetch(ENDPOINT(page)).then((resp) => resp.json());
 
         const data = response;
         const sortedData = data.hits.sort((a, b) => a.id - b.id);
+        // console.log("sortedData", sortedData)
         setImages((prevImages) => [...prevImages, ...sortedData]);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -59,7 +61,7 @@ export default function ImagesDashboard() {
   }, []);
 
   const onImageClick = (id, data) => {
-    navigate(`/images/${id}`, { state: data });
+    navigate(ImageDetails.replace(":id", id), { state: data });
   };
 
   const matchXSmall = useMediaQuery(theme.breakpoints.down("xs"));
