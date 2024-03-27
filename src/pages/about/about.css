@@ -1,0 +1,13 @@
+.about-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px); /* Adjust according to your navbar height */
+    margin-top: 80px;
+}
+
+.about-content {
+    max-width: 800px; /* Adjust according to your design */
+    padding: 20px;
+    text-align: center;
+}
